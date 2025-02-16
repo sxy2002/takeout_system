@@ -34,4 +34,10 @@ public interface EmployeeMapper {
     // 动态sql -> xml
     // 自动添加limit
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    /**
+     * 根据id动态修改属性
+     * @param employee
+     */
+    void update(Employee employee);
 }

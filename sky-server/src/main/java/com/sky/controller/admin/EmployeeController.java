@@ -108,4 +108,19 @@ public class EmployeeController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 员工启用与禁用
+     * @param stat
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("员工启用与禁用")
+    // ?key=value 不写@RequestParam 形参需要与key对应
+    public Result enableOrDisableEmployee(@PathVariable("status") Integer stat, @RequestParam("id") Long empId) {
+        log.info("员工启用与禁用 {}, {}", stat, empId);
+        employeeService.enableOrDisableEmployee(stat, empId);
+        return Result.success();
+    }
+
 }
