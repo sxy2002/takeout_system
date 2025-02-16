@@ -111,7 +111,7 @@ public class EmployeeController {
     /**
      * 员工启用与禁用
      * @param stat
-     * @param id
+     * @param empId
      * @return
      */
     @PostMapping("/status/{status}")
