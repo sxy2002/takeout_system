@@ -35,4 +35,17 @@ public interface EmployeeService {
      * @param empId
      */
     void enableOrDisableEmployee(Integer stat, Long empId);
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    Employee getById(Long id);
+
+    /**
+     * 修改员工信息
+     * @param employeeDTO
+     */
+    void updateEmployee(EmployeeDTO employeeDTO);
 }
