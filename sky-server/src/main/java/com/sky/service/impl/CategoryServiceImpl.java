@@ -41,10 +41,10 @@ public class CategoryServiceImpl implements CategoryService {
 
         BeanUtils.copyProperties(categoryDTO, category);
         category.setStatus(StatusConstant.DISABLE);
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
-        category.setCreateUser(BaseContext.getCurrentId());
-        category.setUpdateUser(BaseContext.getCurrentId());
+//        category.setCreateTime(LocalDateTime.now());
+//        category.setUpdateTime(LocalDateTime.now());
+//        category.setCreateUser(BaseContext.getCurrentId());
+//        category.setUpdateUser(BaseContext.getCurrentId());
 
         categoryMapper.insert(category);
     }
@@ -71,8 +71,8 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = Category.builder()
                 .status(status)
                 .id(catId)
-                .updateTime(LocalDateTime.now())
-                .updateUser(BaseContext.getCurrentId())
+//                .updateTime(LocalDateTime.now())
+//                .updateUser(BaseContext.getCurrentId())
                 .build();
 
         categoryMapper.update(category);
@@ -86,8 +86,8 @@ public class CategoryServiceImpl implements CategoryService {
     public void updateCategory(CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
+//        category.setUpdateTime(LocalDateTime.now());
+//        category.setUpdateUser(BaseContext.getCurrentId());
 
         categoryMapper.update(category);
     }
@@ -122,19 +122,5 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categorys = categoryMapper.list(type);
         return categorys;
     }
-
-    //
-//    /**
-//     * 根据id查询员工信息
-//     * @param id
-//     * @return
-//     */
-//    @Override
-//    public Employee getById(Long id) {
-//        Employee employee = employeeMapper.getById(id);
-//        employee.setPassword("****");   // 加强安全性
-//        return employee;
-//    }
-//
 
 }
