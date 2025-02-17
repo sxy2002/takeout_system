@@ -6,7 +6,9 @@ import com.sky.constant.StatusConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
+import com.sky.dto.EmployeeDTO;
 import com.sky.entity.Category;
+import com.sky.entity.Employee;
 import com.sky.mapper.CategoryMapper;
 import com.sky.result.PageResult;
 import com.sky.service.CategoryService;
@@ -51,4 +53,48 @@ public class CategoryServiceImpl implements CategoryService {
         Page<Category> page = categoryMapper.pageQuery(categoryPageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
     }
+
+    /**
+     * 分类启用已禁用
+     * @param status
+     * @param catId
+     */
+    @Override
+    public void enableOrDisableCategory(Integer status, Long catId) {
+        Category category = Category.builder()
+                .status(status)
+                .id(catId)
+                .build();
+
+        categoryMapper.update(category);
+    }
+
+    /**
+     * 分类修改
+     * @param categoryDTO
+     */
+    @Override
+    public void updateCategory(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        BeanUtils.copyProperties(categoryDTO, category);
+        category.setUpdateTime(LocalDateTime.now());
+        category.setUpdateUser(BaseContext.getCurrentId());
+
+        categoryMapper.update(category);
+    }
+
+    //
+//    /**
+//     * 根据id查询员工信息
+//     * @param id
+//     * @return
+//     */
+//    @Override
+//    public Employee getById(Long id) {
+//        Employee employee = employeeMapper.getById(id);
+//        employee.setPassword("****");   // 加强安全性
+//        return employee;
+//    }
+//
+
 }

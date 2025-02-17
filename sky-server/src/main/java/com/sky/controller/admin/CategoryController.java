@@ -2,7 +2,9 @@ package com.sky.controller.admin;
 
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
+import com.sky.dto.EmployeeDTO;
 import com.sky.entity.Category;
+import com.sky.entity.Employee;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.CategoryService;
@@ -45,4 +47,44 @@ public class CategoryController {
         PageResult pageResult = categoryService.pageQuery(categoryPageQueryDTO);
         return Result.success(pageResult);
     }
+
+    /**
+     * 分类启用已禁用
+     * @param status
+     * @param catId
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("分类启用已禁用")
+    public Result enableOrDisableCategory(@PathVariable Integer status, @RequestParam("id") Long catId) {
+        categoryService.enableOrDisableCategory(status, catId);
+        return Result.success();
+    }
+
+    /**
+     * 分类修改
+     * @param categoryDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("分类修改")
+    public Result updateCategory(@RequestBody CategoryDTO categoryDTO) {
+        categoryService.updateCategory(categoryDTO);
+        return Result.success();
+    }
+
+//
+//    /**
+//     * 根据id查询员工信息
+//     * @param id
+//     * @return
+//     */
+//    @GetMapping("/{id}")
+//    @ApiOperation("根据id查询员工信息")
+//    public Result<Employee> getById(@PathVariable Long id) {
+//        Employee employee = employeeService.getById(id);
+//        return Result.success(employee);
+//    }
+//
+
 }
