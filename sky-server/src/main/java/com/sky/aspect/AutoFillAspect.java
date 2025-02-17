@@ -37,7 +37,7 @@ public class AutoFillAspect {
     public void autoFill(JoinPoint joinPoint) { // 连接点，拦截到的方法及其参数
         log.info("进行公共字段自动填充");
 
-        // 获取当前被拦截方法上的数据库操作类型（反射）
+        // 获取当前被拦截方法上的数据库操作类型 -> 注解的value（反射）
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();     // 方法签名对象
         AutoFill autoFill = signature.getMethod().getAnnotation(AutoFill.class);  // 方法上的注解对象
         OperationType operationType = autoFill.value();
