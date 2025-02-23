@@ -13,6 +13,7 @@ import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,6 +35,8 @@ public class DishServiceImpl implements DishService {
     private DishFlavorMapper dishFlavorMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+    @Autowired
+    private SetmealMapper setmealMapper;
 
 
     /**
@@ -121,6 +125,7 @@ public class DishServiceImpl implements DishService {
         }
     }
 
+    @Transactional
     @Override
     public void enableOrDisableDish(Integer status, Long id) {
         Dish dish = Dish.builder()
@@ -141,9 +146,19 @@ public class DishServiceImpl implements DishService {
                             .id(seatmealId)
                             .status(status)
                             .build();
-                    setmealDishMapper.update(setmeal);
+                    setmealMapper.update(setmeal);
                 }
             }
         }
+    }
+
+    @Override
+    public List<Dish> list(Long categoryId) {
+        Dish dish = Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE)
+                .build();
+        List<Dish> dishes = dishMapper.list(dish);
+        return dishes;
     }
 }
