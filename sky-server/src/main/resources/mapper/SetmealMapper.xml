@@ -35,13 +35,13 @@
         </where>
         order by s.create_time desc
     </select>
+    <delete id="deleteBatchByIds">
+        delete from setmeal where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 
-    <!--    <delete id="deleteBatchByIds">-->
-    <!--        delete from dish where id in-->
-    <!--        <foreach collection="ids" item="id" separator="," open="(" close=")">-->
-    <!--            #{id}-->
-    <!--        </foreach>-->
-    <!--    </delete>-->
     <!--    <update id="update" parameterType="Dish">-->
     <!--        update dish-->
     <!--        <set>-->
