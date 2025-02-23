@@ -8,6 +8,7 @@ import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.entity.Setmeal;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,6 +33,7 @@ public class DishServiceImpl implements DishService {
     private DishFlavorMapper dishFlavorMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+
 
     /**
      * 菜品新增
@@ -126,5 +129,21 @@ public class DishServiceImpl implements DishService {
                 .build();
 
         dishMapper.update(dish);
+
+        // 停售，则包含此菜品的套餐也需要停售
+        if(status == StatusConstant.DISABLE) {
+            List<Long> dishIds = new ArrayList<>();
+            dishIds.add(id);
+            List<Long> seatmealIds = setmealDishMapper.getSeatmealIdsByDishIds(dishIds);
+            if(seatmealIds != null && seatmealIds.size() > 0) {
+                for(Long seatmealId : seatmealIds) {
+                    Setmeal setmeal = Setmeal.builder()
+                            .id(seatmealId)
+                            .status(status)
+                            .build();
+                    setmealDishMapper.update(setmeal);
+                }
+            }
+        }
     }
 }
