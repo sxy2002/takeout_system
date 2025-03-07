@@ -3,6 +3,7 @@ package com.sky.controller.admin;
 import com.sky.constant.MessageConstant;
 import com.sky.result.Result;
 import com.sky.utils.AliOssUtil;
+import com.sky.utils.HwObsUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ public class CommonController {
 
     @Autowired
     private AliOssUtil aliOssUtil;
+    @Autowired
+    private HwObsUtil hwObsUtil;
 
     /**
      * 文件上传
@@ -39,6 +42,7 @@ public class CommonController {
             String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
             String name = UUID.randomUUID().toString() + ext;
             String filePath = aliOssUtil.upload(file.getBytes(), name);     // 返回文件请求路径
+//            String filePath = hwObsUtil.upload(file.getBytes(), name);
 
             return Result.success(filePath);
         } catch (IOException e) {
