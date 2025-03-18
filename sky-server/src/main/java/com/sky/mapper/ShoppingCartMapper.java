@@ -19,9 +19,6 @@ public interface ShoppingCartMapper {
 
     void insert(ShoppingCart shoppingCart);
 
-    @Select("select * from shopping_cart where user_id = #{currentId}")
-    List<ShoppingCart> getByUserID(Long currentId);
-
     @Delete("delete from shopping_cart where id = #{id}")
     void deleteById(Long id);
 

@@ -151,6 +151,7 @@ public class WeChatPayUtil {
         jsonObject.put("payer", payer);
 
         String body = jsonObject.toJSONString();
+        // 发出post请求
         return post(JSAPI, body);
     }
 
