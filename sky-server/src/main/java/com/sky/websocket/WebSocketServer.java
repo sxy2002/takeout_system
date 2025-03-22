@@ -53,7 +53,7 @@ public class WebSocketServer {
      *
      * @param message
      */
-    // 主动调
+    // 主动调（没有注解）
     public void sendToAllClient(String message) {
         Collection<Session> sessions = sessionMap.values();
         for (Session session : sessions) {
