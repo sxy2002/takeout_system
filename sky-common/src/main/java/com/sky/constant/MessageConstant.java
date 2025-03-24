@@ -24,7 +24,7 @@ public class MessageConstant {
     public static final String SHOPPING_CART_IS_NULL = "购物车数据为空，不能下单";
     public static final String ORDER_NOT_FOUND = "订单不存在";
     public static final String ORDER_STATUS_ERROR = "订单状态错误";
-    public static final String USER_NOT_LOGIN = "用户未登录";
     public static final String PASSWORD_EDIT_FAILED = "密码修改失败";
+    public static final String USER_NOT_LOGIN = "用户未登录";
 
 }

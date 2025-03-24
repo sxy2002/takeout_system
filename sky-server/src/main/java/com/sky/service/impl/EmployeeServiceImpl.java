@@ -9,6 +9,7 @@ import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
@@ -142,6 +143,34 @@ public class EmployeeServiceImpl implements EmployeeService {
         BeanUtils.copyProperties(employeeDTO, employee);
 //        employee.setUpdateTime(LocalDateTime.now());
 //        employee.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(employee);
+    }
+
+    @Override
+    public void updatePassword(PasswordEditDTO passwordEditDTO) {
+        //1、根据用户名查询数据库中的数据
+        Employee employee = employeeMapper.getById(BaseContext.getCurrentId());
+
+        //2、处理各种异常情况（用户名不存在、密码不对、账号被锁定）
+        if (employee == null) {
+            //账号不存在
+            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
+        }
+
+        //密码比对
+        // 进行md5加密，然后再进行比对
+        String password = DigestUtils.md5DigestAsHex(passwordEditDTO.getOldPassword().getBytes());
+        if (!password.equals(employee.getPassword())) {
+            //密码错误
+            throw new PasswordErrorException(MessageConstant.PASSWORD_EDIT_FAILED);
+        }
+
+        if (employee.getStatus() == StatusConstant.DISABLE) {
+            //账号被锁定
+            throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);
+        }
+
+        employee.setPassword(DigestUtils.md5DigestAsHex(passwordEditDTO.getNewPassword().getBytes()));
         employeeMapper.update(employee);
     }
 }
