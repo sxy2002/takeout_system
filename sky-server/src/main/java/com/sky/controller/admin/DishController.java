@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class DishController {
      */
     @PostMapping
     @ApiOperation("菜品新增")
+    @Transactional
     public Result addDish(@RequestBody DishDTO dishDTO) {
         dishService.addDishWithFlavor(dishDTO);
 
@@ -52,6 +54,7 @@ public class DishController {
 
     @DeleteMapping
     @ApiOperation("菜品批量删除")
+    @Transactional
     // 加@RequestParam Spring自动将String解析成List
     public Result deleteDishs(@RequestParam List<Long> ids) {
         log.info("菜品批量删除：{}", ids);
@@ -70,6 +73,7 @@ public class DishController {
 
     @PutMapping
     @ApiOperation("菜品修改")
+    @Transactional
     public Result updateDish(@RequestBody DishDTO dishDTO) {
         dishService.updateDishWithFlavor(dishDTO);
 
@@ -79,6 +83,7 @@ public class DishController {
 
     @PostMapping("/status/{status}")
     @ApiOperation("菜品起售与停售")
+    @Transactional
     public Result enableOrDisableDish(@PathVariable Integer status, Long id) {
         dishService.enableOrDisableDish(status, id);
 
